@@ -1,0 +1,16 @@
+{
+    "name": "RopeSystem.Demo.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:85fcfb2df04434a919c537f9a90c1ec0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
