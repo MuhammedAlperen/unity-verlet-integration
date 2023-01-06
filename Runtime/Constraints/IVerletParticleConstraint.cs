@@ -3,5 +3,6 @@
     public interface IVerletParticleConstraint
     {
         void ResolveConstraint();
+        void DrawGizmos();
     }
 }

@@ -35,5 +35,14 @@ namespace RopeSystem.Runtime.Constraints
         {
             AnchoredParticle.Position = AnchorTransform.position;
         }
+
+        public void DrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            var anchorPosition = AnchoredParticle.Position;
+            Gizmos.DrawLine(anchorPosition + new Vector3(.5f, 0f, 0f), anchorPosition - new Vector3(.5f, 0f, 0f));
+            Gizmos.DrawLine(anchorPosition + new Vector3(0f, .5f, 0f), anchorPosition - new Vector3(0f, .5f, 0f));
+            Gizmos.DrawLine(anchorPosition + new Vector3(0f, 0f, .5f), anchorPosition - new Vector3(0f, 0f, .5f));
+        }
     }
 }

@@ -27,5 +27,14 @@ namespace RopeSystem.Runtime.Particles
             get => m_isPinned;
             set => m_isPinned = value;
         }
+
+        public VerletParticle(Vector3 position) : this(position, false) { }
+
+        public VerletParticle(Vector3 position, bool isPinned)
+        {
+            Position = position;
+            PreviousPosition = position;
+            IsPinned = isPinned;
+        }
     }
 }

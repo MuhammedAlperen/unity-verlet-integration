@@ -3,24 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using RopeSystem.Runtime;
 using RopeSystem.Runtime.Constraints;
-using RopeSystem.Runtime.Particles;
 using UnityEngine;
 
 namespace RopeSystem.Demo.Scripts.Runtime
 {
-    public class Rope : MonoBehaviour
+    public class VerletRope : VerletDemo
     {
-        [SerializeField] private int m_stickResolveIterations;
-
-        [SerializeField] private List<VerletParticle> m_pointList;
         [SerializeField] private List<IndexedStick> m_stickList;
 
         private VerletSimulation _simulation;
 
         private void OnEnable()
         {
-            _simulation = new VerletSimulation(m_stickResolveIterations, new UnityGravityProvider());
-            _simulation.AddParticles(m_pointList);
+            _simulation = new VerletSimulation(ConstraintSolverIterations, new UnityGravityProvider());
+            _simulation.AddParticles(m_particleList);
             _simulation.AddConstraints(m_stickList.Select(GetStick).ToList());
         }
 
@@ -31,11 +27,16 @@ namespace RopeSystem.Demo.Scripts.Runtime
 
         private VerletStick GetStick(IndexedStick indexedStick)
         {
-            var startPoint = m_pointList[indexedStick.StartPointIndex];
-            var endPoint = m_pointList[indexedStick.EndPointIndex];
+            var startPoint = m_particleList[indexedStick.StartPointIndex];
+            var endPoint = m_particleList[indexedStick.EndPointIndex];
             var stiffness = indexedStick.Stiffness;
 
             return new VerletStick(startPoint, endPoint, stiffness);
+        }
+
+        private void OnDrawGizmos()
+        {
+            _simulation?.DrawGizmos();
         }
 
         [Serializable]

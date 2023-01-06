@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using RopeSystem.Runtime.Constraints;
 using RopeSystem.Runtime.Particles;
+using UnityEngine;
 
 namespace RopeSystem.Runtime
 {
@@ -58,6 +59,20 @@ namespace RopeSystem.Runtime
             point.Position = point.Position * 2 - point.PreviousPosition;
             point.Position += _gravityProvider.Gravity * (deltaTime * deltaTime);
             point.PreviousPosition = previousPosition;
+        }
+
+        public void DrawGizmos()
+        {
+            foreach (var particle in _particles)
+            {
+                Gizmos.color = particle.IsPinned ? Color.red : Color.green;
+                Gizmos.DrawSphere(particle.Position, .1f);
+            }
+
+            foreach (var constraint in _constraints)
+            {
+                constraint.DrawGizmos();
+            }
         }
     }
 }
