@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RopeSystem.Runtime;
+using RopeSystem.Runtime.Constraints;
+using RopeSystem.Runtime.Particles;
 using UnityEngine;
 
 namespace RopeSystem.Demo.Scripts.Runtime
@@ -9,25 +11,31 @@ namespace RopeSystem.Demo.Scripts.Runtime
     public class Rope : MonoBehaviour
     {
         [SerializeField] private int m_stickResolveIterations;
-        
-        [SerializeField] private List<RopePoint> m_pointList;
+
+        [SerializeField] private List<VerletParticle> m_pointList;
         [SerializeField] private List<IndexedStick> m_stickList;
 
-        private RopeSimulation _simulation;
-        
+        private VerletSimulation _simulation;
+
         private void OnEnable()
         {
-            _simulation = new RopeSimulation(m_stickResolveIterations, new UnityGravityProvider(), m_pointList, m_stickList.Select(GetStick).ToList());
+            _simulation = new VerletSimulation(m_stickResolveIterations, new UnityGravityProvider());
+            _simulation.AddParticles(m_pointList);
+            _simulation.AddConstraints(m_stickList.Select(GetStick).ToList());
         }
 
         private void FixedUpdate()
         {
             _simulation.Simulate(Time.fixedDeltaTime);
         }
-        
-        private RopeStick GetStick(IndexedStick indexedStick)
+
+        private VerletStick GetStick(IndexedStick indexedStick)
         {
-            return new RopeStick(m_pointList[indexedStick.StartPointIndex], m_pointList[indexedStick.EndPointIndex], indexedStick.Stiffness);
+            var startPoint = m_pointList[indexedStick.StartPointIndex];
+            var endPoint = m_pointList[indexedStick.EndPointIndex];
+            var stiffness = indexedStick.Stiffness;
+
+            return new VerletStick(startPoint, endPoint, stiffness);
         }
 
         [Serializable]

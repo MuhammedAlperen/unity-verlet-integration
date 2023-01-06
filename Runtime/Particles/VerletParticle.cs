@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
-namespace RopeSystem.Runtime
+namespace RopeSystem.Runtime.Particles
 {
-    [Serializable]
-    public class RopePoint
+    [System.Serializable]
+    public class VerletParticle : IVerletParticle
     {
         [SerializeField] private Vector3 m_position;
         [SerializeField] private Vector3 m_previousPosition;
@@ -14,19 +13,19 @@ namespace RopeSystem.Runtime
         public Vector3 Position
         {
             get => m_position;
-            internal set => m_position = value;
+            set => m_position = value;
         }
-        
+
         public Vector3 PreviousPosition
         {
             get => m_previousPosition;
-            internal set => m_previousPosition = value;
+            set => m_previousPosition = value;
         }
-        
+
         public bool IsPinned
         {
             get => m_isPinned;
-            internal set => m_isPinned = value;
+            set => m_isPinned = value;
         }
     }
 }
